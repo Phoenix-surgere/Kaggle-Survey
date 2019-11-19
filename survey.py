@@ -68,10 +68,26 @@ for i,j in enumerate(lsc):
     if j =='Other':
         print(i)
         inds.append(i+1)  #finding cutoffs between categories via Other
-question_categories = ['Important part of work', 'Media Sources DS',
-                       'Education Sources', 'lol' ]                        
-
-#questions = questions.T
+question_categories = ['main_job_roles', 
+                       'media_sources_DS',
+                       'course_platforms', 
+                       'IDE',
+                       'hosted_notebooks', 
+                       'language_used',
+                       'visualization_libraries',
+                       'specialized_hardware',
+                       'ML_algos_used',
+                       'ML_tools_used',
+                       'CV_methods',
+                       'NLP_methods',
+                       'ML_frameworks',
+                       'cloud_computing_platforms',
+                       'cloud_computing_products',                                              
+                       'big_data_tools_used',
+                       'ML_products',
+                       'auto_ML_tools',
+                       'relational_databases'
+                       ]  
 answers = []
 for i in range(1,len(inds)):
     if i ==1:
@@ -81,5 +97,7 @@ for i in range(1,len(inds)):
     print(lsc[inds[i-1]:inds[i]])   #have answers here, just need to group by qs
     print('*'*10)
     answers.append(lsc[inds[i-1]:inds[i]])
-answers = pd.DataFrame.from_records(answers).T #ANSWERS!! Just need qs 4clarity
+answers = pd.DataFrame.from_records(answers).T #ANSWERS!! Added the columns for clarity
+answers.columns = question_categories
+
 
