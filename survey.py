@@ -48,10 +48,7 @@ parts = parts.iloc[1:,:]
 parts = parts.iloc[:, 1:]
 parts.columns = names
 mpresponce.drop(columns=COLS, inplace=True)  #can do analysis from that line on
-#EDA: Easy columns
 
-
-#DROP mpresponce columns[32:37]
 colnums = list(range(32,37)) #found via manual search
 mpresponce.drop(mpresponce.columns[colnums], axis=1, inplace=True)
 import re 
@@ -99,5 +96,9 @@ for i in range(1,len(inds)):
     answers.append(lsc[inds[i-1]:inds[i]])
 answers = pd.DataFrame.from_records(answers).T #ANSWERS!! Added the columns for clarity
 answers.columns = question_categories
+
+#EDA: Easy columns
+import matplotlib.pyplot as plt
+import seaborn
 
 
