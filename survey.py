@@ -101,4 +101,17 @@ answers.columns = question_categories
 import matplotlib.pyplot as plt
 import seaborn
 
+def countplot(df, column, title):
+    sns.countplot(x=df[column],data=df)
+    plt.xticks(rotation=45)
+    plt.title(title)
+    plt.grid(True)
+    plt.show()
+    
+
+countplot(main,'recommended_language', 'Recommended Languages')
+countplot(main,'Gender', 'Gender Distribution')
+countplot(main, 'Education', 'Education Attained')
+
+
 
