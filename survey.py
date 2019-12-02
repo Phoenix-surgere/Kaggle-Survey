@@ -115,5 +115,24 @@ countplot(main, 'Education', 'Education Attained')
 countplot(main, 'Job_title', 'Job Title')
 
 top_countries = (main.Country.value_counts(normalize=True)*100)[0:15]
+us = main.loc[(main.Country == 'United States of America')]  
+ind = main.loc[(main.Country == 'India')]
 
+def barchart(df, column, title, ncols=None):
+    df[column].value_counts()[0:ncols].plot(kind='bar')
+    plt.title(title)
+    plt.grid(True)
+    plt.show()
+
+barchart(us, 'Age','Distribution of Ages - USA')
+barchart(ind, 'Age','Distribution of Ages - India')
+
+barchart(us, 'Job_title', 'Distribution of Job titles - USA',6 )
+barchart(ind, 'Job_title', 'Distribution of Job titles - India', 6)
+
+barchart(us, 'annual_salary', 'Distribution of Salaries - USA',6 )
+barchart(ind, 'annual_salary', 'Distribution of Salaries - India',6 )
+
+platforms = mpresponce[list(answers.course_platforms.values)[:-2]]
+print(platforms.apply(pd.Series.count))
 
