@@ -112,6 +112,8 @@ def countplot(df, column, title):
 countplot(main,'recommended_language', 'Recommended Languages')
 countplot(main,'Gender', 'Gender Distribution')
 countplot(main, 'Education', 'Education Attained')
+countplot(main, 'Job_title', 'Job Title')
 
+top_countries = (main.Country.value_counts(normalize=True)*100)[0:15]
 
 
