@@ -133,6 +133,23 @@ barchart(ind, 'Job_title', 'Distribution of Job titles - India', 6)
 barchart(us, 'annual_salary', 'Distribution of Salaries - USA',6 )
 barchart(ind, 'annual_salary', 'Distribution of Salaries - India',6 )
 
-platforms = mpresponce[list(answers.course_platforms.values)[:-2]]
-print(platforms.apply(pd.Series.count))
+def stripcols(col, df=mpresponce, keys=answers):
+    stripped = df[list(keys[col].values)[:-2]]
+    aggregated = stripped.apply(pd.Series.count).sort_values(ascending=False)
+    return aggregated
+
+def plot_categories(aggregated, title=None, xlabel=None, ylabel=None):
+    plt.figure(figsize=(10,6))
+    aggregated.sort_values(ascending=False).plot.barh()
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.grid(True)
+    plt.show()
+#1st approach is defining the aggregated matrix explictly, 2nd is to just use a functional approach to save writing.
+platforms = stripcols('course_platforms')
+plot_categories(platforms, title= 'Course Platforms by popularity', 
+                ylabel='Participants')
+
+plot_categories(stripcols('media_sources_DS'), title='Media Data Science Sources')
 
