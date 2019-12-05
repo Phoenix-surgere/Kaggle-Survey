@@ -5,10 +5,12 @@ Created on Tue Nov 12 01:22:19 2019
 @author: black
 
 GUIDE:
-1. parts is my main file, with easy-to-work with data
-2. mpresponce is my additional data file, which has been extensively worked 
-to make more sense to work with, especially indexing. I ignored text answers
-3.answers are the answers of 2. , but clearly depicted for easier merging
+1. 'parts' is my main file, with "easy"-to-work with data - Renamed as 'main' to make more sense in context
+
+2. 'mpresponce' is my additional data file, which has been extensively worked to make more sense to work with, especially indexing. 
+I ignored text answers. I consider a bit "harder" to work with, thus extensive preprocessing
+
+3.'answers' are the answers of 2. , but clearly depicted for easier merging
 
 Plan: 
 EDA parts on its own, then merge selectively with mpresponce with help from answers    
@@ -22,14 +24,13 @@ schema = pd.read_csv(r'kaggle-survey-2019/survey_schema.csv')
 mpresponce = pd.read_csv(r'kaggle-survey-2019/multiple_choice_responses.csv')
 txtresponce = pd.read_csv(r'kaggle-survey-2019/other_text_responses.csv')
 mporig = mpresponce
-#QS = mporig.columns
 
 SUBSET = list(mpresponce.columns.to_series().str.contains('OTHER_TEXT'))
 DF = mpresponce.loc[:,SUBSET]
 mpresponce = mpresponce.drop(columns=DF)
 rows = mpresponce.iloc[0]
 
-#Can actually do quite some analysis using parts itself as well
+#Can actually do quite some interesting analysis using parts itself as well
 qs = mpresponce.columns[1:]
 qs = list(mporig.columns.to_series().str.contains('_Part_'))
 parts = mporig.loc[:, list(~pd.Series(qs))]
@@ -43,11 +44,12 @@ names = ['Age', 'Gender', 'Country', 'Education', 'Job_title', 'Employer_Size',
          'DS_Employees', 'Employer_uses_ML', 
          'annual_salary', 'money_spent_ML', 'tools_ML', 'yrs_experience_coding',
          'recommended_language', 'used_TPU', 'yrs_using_ML']
+
 parts.columns = parts.iloc[0,:]
 parts = parts.iloc[1:,:]
 parts = parts.iloc[:, 1:]
 parts.columns = names
-mpresponce.drop(columns=COLS, inplace=True)  #can do analysis from that line on
+mpresponce.drop(columns=COLS, inplace=True)  
 
 colnums = list(range(32,37)) #found via manual search
 mpresponce.drop(mpresponce.columns[colnums], axis=1, inplace=True)
@@ -59,7 +61,7 @@ for col in mpresponce_cols:
     lsc.append(re.split(pattern, col)[1])  #lsc=>Answers
 lsc = [word.strip() for word in lsc]
 mpresponce.columns = lsc    
-#TO D0: CREATE MAPPING OF QUESTIONS - ANSWERS USING LSC for indexing on  parts
+#TO D0: CREATE MAPPING OF QUESTIONS - ANSWERS USING LSC for indexing on  parts - DONE 
 inds = []                       
 for i,j in enumerate(lsc):
     if j =='Other':
