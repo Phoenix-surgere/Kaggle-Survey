@@ -136,7 +136,7 @@ barchart(us, 'annual_salary', 'Distribution of Salaries - USA',6 )
 barchart(ind, 'annual_salary', 'Distribution of Salaries - India',6 )
 
 def stripcols(col, df=mpresponce, keys=answers):
-    stripped = df[list(keys[col].values)[:-2]]
+    stripped = df[list(keys[col].dropna().values)[:-2]]
     aggregated = stripped.apply(pd.Series.count).sort_values(ascending=False)
     return aggregated
 
@@ -149,9 +149,13 @@ def plot_categories(aggregated, title=None, xlabel=None, ylabel=None):
     plt.grid(True)
     plt.show()
 #1st approach is defining the aggregated matrix explictly, 2nd is to just use a functional approach to save writing.
-platforms = stripcols('course_platforms')
-plot_categories(platforms, title= 'Course Platforms by popularity', 
-                ylabel='Participants')
+#platforms = stripcols('course_platforms')
+#plot_categories(platforms, title= 'Course Platforms by popularity', 
+#                ylabel='Participants')
 
-plot_categories(stripcols('media_sources_DS'), title='Media Data Science Sources')
+#plot_categories(stripcols('media_sources_DS'), title='Media Data Science Sources')
+
+#Display all plots with a loop in one go
+for column in answers.columns:
+    plot_categories(stripcols(column), title=column)
 
